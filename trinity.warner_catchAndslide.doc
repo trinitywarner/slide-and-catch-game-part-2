@@ -1,0 +1,152 @@
+Milestone Plan
+
+1. game scene with background image 
+2. add basic sprite
+3. add a keyboard motion to sprite
+4. add single coin with reset, falling an boundary behaviors
+5. add collision effect between sprite and coin
+6. modify for multiple coins including collision behavior
+7. user feedback (scorekeeping, timing, and labels)
+8. endgame, start and quit buttons
+
+
+class Pickle(simpleGE.Sprite):
+	def __init__(self, scene):
+		super()__init__(scene)
+		self.setImage(pickle png)
+		self.setSize(##, ##)
+		self.minSpeed gets #
+		self.maxSpeed gets #
+
+	def reset(self):
+		self.y gets #
+
+		self.x get random randit(self.minSpeed, self.maxSpeed)
+		
+		self.dy gets random randit(self.minSpeed, self.maxSpeed)
+
+	def checkBounds(self):
+		if self.bottom > self.screenHeight:
+			self.reset()
+
+class Burger(simpleGE,.Sprite):
+	def __init__(self, scene):
+		super().__init__(scene)
+		self.setImage(burger#7 png)
+		self.setSize(##, ##)
+		self.position gets (###, ###)
+		self.moveSpeed gets #
+
+	def process(self):
+		if self.isKeyPressed(pygame.K_LEFT):
+			self.x -= self.moveSpeed
+		if self.isKeyPressed(pygame.L_RIGHT):
+			self.x += self.moveSpeed
+
+class LblScore(simpleGE.Label):
+	def __init__(self):
+		super().__init__()
+		self.text gets score: 0
+		self.center gets (100, 30)
+
+class lblTime(simpleGE.Label):
+	def __init__(self):
+		super().__init__()
+		self.text gets Time left: 30
+		self.center gets (500, 30)
+
+class Game(simpleGE.Scene):
+	def __init__(self):
+		super().__init__()
+		self.setImage(backgroung png)
+
+		self.numPickles gets #
+		self.score gets 0
+		self.lblScore gets lblScore()
+
+		self.time gets simpleGE.Timer()
+		self.time.totalTime gets 10
+		self.lblScore gets LblTime()
+
+		self.burger gets Burger(self)
+
+		self.pickles gets []
+		for i in range(self.numPickles):
+			self.pickles.append(Pickle(self))
+
+		self.sprites gets [self.burger,
+				   self.pickles,
+				   self.lblScore,
+				   self.lblTime]
+
+	def process(self):
+		for pickle in self.pickles:
+			if coin.collidesWith(self.burger):
+				coin.reset()
+				self.score += 1
+				self.lblScore.text gets f"Score: {self.score}"
+				self.lblTime.text gets f"Time Left: {self.timer.getTimeLeft():.2f}"
+				if self.timer.getTimerLeft() < 0:
+            			print(f"Score: {self.score}")
+					self.stop()
+
+
+class Instructions(simpleGE.Scene):
+    def __init__(self):
+        super().__init__()
+        self.setImage("background2.png")
+	self.response gets Feast!
+        
+        self.directions gets simpleGE.MultiLabel()
+        self.directions.textLines gets [
+        "You are a diner meal!",
+        "Move your arrow keys from left to right.",
+        "Catch as many pickles you can to put on your burger!",
+        "Watch the time!"
+	""
+	]
+
+	self.directions.center gets (320, 240)
+        self.directions.size gets (500, 250)
+
+	self.btnPlay gets simpleGE.Button()
+        self.btnPlay.text gets "Feast!"
+        self.btnPay.Center gets (150, 400)
+
+	self.btnQuit gets simpleGE.Button()
+        self.btnQuit.text gets "Quit!"
+        self.btnQuit.center gets (500, 400)
+        
+        self.sprites gets [self.directions,
+			   self.btnPlay]
+
+     def process(self):
+       if self.btnPlay.clicked:
+	   self.response gets Feast!
+           self.stop()
+           
+        if self.btnQuit.clicked:
+	    self.response gets Quit
+            self.stop()
+
+def main():
+
+	keepGoing gets True
+	while keepGoing:
+		instrucitons gets Instructions()
+		instrucitons.start()
+
+		if instrucitons.response equals Feast!:
+			game gets Game()
+			game.start()
+
+		else:
+			keepGoing gets False
+
+	####print(instructions.response)
+
+
+if __name__ equal to __main__
+	main()
+
+
